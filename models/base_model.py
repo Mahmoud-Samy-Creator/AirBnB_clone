@@ -1,52 +1,55 @@
 #!/usr/bin/python3
+
 """
-Custom base class for the entire project
+A class BaseModelthat defines
+all common attributes/methods for other classes
 """
 
+# to generate unique id [ Use it in string only ]
 from uuid import uuid4
+
+# datetime - assign with the current datetime when an instance is created
 from datetime import datetime
 
+
 class BaseModel:
-    """Custom base for all the classes in the AirBnb console project
-
-    Attributes:
-        id (str): handles unique user identity
-        created_at: assigns current datetime
-        updated_at: updates current datetime
-
-    Methods:
-        __str__: prints the class name, id, and creates dictionary
-        save(self): updates instance attributes with current datetime
-        to_dict(self): returns the dictionary values of the instance obj
-
-    """
-
-    
     def __init__(self):
-        """initialize a public instance"""
-        #convert id value to string
-        self.id = str(uuid4()) 
+        """
+        Define public instance attributes
+        - id: unique id for every instance
+        - created_at: the time at which the instance created
+        - updated_at: the time at which the instance updated
+        """
+        self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
     def __str__(self):
-        """return string representation of obj"""
+        """
+        display string information about new instant
+        """
+        class_name = self.__class__.__name__
+        return f"[{class_name}] ({self.id}) {self.__dict__}"
 
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
     def save(self):
-        """update the updated_at to current time"""
-
+        """
+        updates the public instance attribute
+        updated_at with the current datetime
+        """
         self.updated_at = datetime.now()
 
     def to_dict(self):
-        """Returns a dictionary representation"""
+        """
+        return a dictionary of all attributes information
+        """
+        class_name = self.__class__.__name__
+        formatted_created_at = self.created_at.isoformat()
+        formatted_updated_at = self.updated_at.isoformat()
 
-        data_copied = self.__dict__.copy()
-        #to access name of class
-        data_copied["__class__"] = self.__class__.__name__
-    #Convert to ISO format
-        data_copied["created_at"] = self.created_at.isoformat()
-        data_copied["updated_at"] = self.updated_at.isoformat()
-        #return the dictionary
-        return data_copied
+        final_dict = self.__dict__.copy()
+
+        final_dict["__class__"] = class_name
+        final_dict["created_at"] = formatted_created_at
+        final_dict["updated_at"] = formatted_updated_at
+
+        return final_dict
