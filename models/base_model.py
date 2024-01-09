@@ -22,7 +22,7 @@ class BaseModel:
         """
         self.id = str(uuid4())
         self.created_at = datetime.now()
-        self.update_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def __str__(self):
         """
@@ -44,17 +44,12 @@ class BaseModel:
         """
         class_name = self.__class__.__name__
         formatted_created_at = self.created_at.isoformat()
-        formatted_updated_at = self.update_at.isoformat()
+        formatted_updated_at = self.updated_at.isoformat()
 
-        data = self.__dict__.copy()
+        final_dict = self.__dict__.copy()
 
-        final_dict = {
-            "my_number": self.my_number,
-            "name": data["name"],
-            "__class__": class_name,
-            "updated_at": formatted_updated_at,
-            "id": self.id,
-            "created_at": formatted_created_at
-        }
+        final_dict["id"] = self.id
+        final_dict["created_at"] = formatted_created_at
+        final_dict["updated_at"] = formatted_updated_at
 
         return final_dict
