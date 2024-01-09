@@ -46,10 +46,15 @@ class BaseModel:
         formatted_created_at = self.created_at.isoformat()
         formatted_updated_at = self.update_at.isoformat()
 
-        final_dict = self.__dict__.copy()
+        data = self.__dict__.copy()
 
-        final_dict["__class__"]= class_name
-        final_dict["updated_at"]= formatted_updated_at
-        final_dict["created_at"]= formatted_created_at
+        final_dict = {
+            "my_number": self.my_number,
+            "name": data["name"],
+            "__class__": class_name,
+            "updated_at": formatted_updated_at,
+            "id": self.id,
+            "created_at": formatted_created_at
+        }
 
         return final_dict
