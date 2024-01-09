@@ -47,6 +47,7 @@ class BaseModel:
         formatted_updated_at = self.update_at.isoformat()
 
         final_dict = {
+            "__class__": class_name,
             "name": class_name,
             "id": self.id,
             "created_at": formatted_created_at,
