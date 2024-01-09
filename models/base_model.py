@@ -46,6 +46,8 @@ class BaseModel:
         formatted_created_at = self.created_at.isoformat()
         formatted_updated_at = self.update_at.isoformat()
 
+        final_dict = self.__dict__.copy()
+
         final_dict = {
             "name": class_name,
             "__class__": class_name,
@@ -54,6 +56,6 @@ class BaseModel:
             "created_at": formatted_created_at,
         }
 
-        final_dict.update(self.__dict__)
+        # final_dict.update(self.__dict__)
 
         return final_dict
