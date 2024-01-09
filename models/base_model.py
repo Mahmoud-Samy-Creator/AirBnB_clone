@@ -48,7 +48,6 @@ class BaseModel:
 
         final_dict = self.__dict__.copy()
 
-        final_dict["id"] = self.id
         final_dict["created_at"] = formatted_created_at
         final_dict["updated_at"] = formatted_updated_at
 
