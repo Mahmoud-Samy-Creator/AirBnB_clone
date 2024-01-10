@@ -13,6 +13,7 @@ from datetime import datetime
 
 
 class BaseModel:
+    """Representing the base model of HBNB project."""
     def __init__(self):
         """
         Define public instance attributes
