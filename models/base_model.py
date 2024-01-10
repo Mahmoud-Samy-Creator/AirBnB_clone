@@ -11,6 +11,7 @@ from uuid import uuid4
 # datetime - assign with the current datetime when an instance is created
 from datetime import datetime
 
+import models
 
 class BaseModel:
     """Representing the base model of HBNB project."""
