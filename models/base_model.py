@@ -5,6 +5,9 @@ A class BaseModelthat defines
 all common attributes/methods for other classes
 """
 
+
+import models
+
 # to generate unique id [ Use it in string only ]
 from uuid import uuid4
 
@@ -12,7 +15,6 @@ from uuid import uuid4
 from datetime import datetime
 from models import storage
 
-import models
 
 
 # 3. BaseModel
