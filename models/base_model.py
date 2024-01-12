@@ -32,10 +32,11 @@ class BaseModel:
 
         # 4. Create BaseModel from dictionary
         if (kwargs):
-            self.id = kwargs["id"]
-            self.created_at = datetime.strptime(kwargs["created_at"], format)
-            self.updated_at = datetime.strptime(kwargs["updated_at"], format)
-            del kwargs['__class__']
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, tform)
+                else:
+                    self.__dict__[k] = v
 
         else:
             storage.new(self)
