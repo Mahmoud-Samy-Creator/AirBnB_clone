@@ -24,7 +24,7 @@ class BaseModel:
         - updated_at: the time at which the instance updated
         """
 
-        if (kwargs):
+        if len(kwargs) != 0:
             format = '%Y-%m-%dT%H:%M:%S.%f'
             self.id = kwargs["id"]
             self.created_at = datetime.strptime(kwargs["created_at"], format)
@@ -49,6 +49,7 @@ class BaseModel:
         updated_at with the current datetime
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
