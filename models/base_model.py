@@ -23,18 +23,19 @@ class BaseModel:
         - created_at: the time at which the instance created
         - updated_at: the time at which the instance updated
         """
+        format = '%Y-%m-%dT%H:%M:%S.%f'
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
         if len(kwargs) != 0:
-            format = '%Y-%m-%dT%H:%M:%S.%f'
-            self.id = kwargs["id"]
-            self.created_at = datetime.strptime(kwargs["created_at"], format)
-            self.updated_at = datetime.strptime(kwargs["updated_at"], format)
-            del kwargs['__class__']
-
+            for k, v in kwargs.items():
+                if k == 'created_at' or k == 'updated_at':
+                    self.__dict__[k] == datetime.strptime(v, format)
+                else:
+                    self.__dict__[k] = v
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """
