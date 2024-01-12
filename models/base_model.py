@@ -14,6 +14,7 @@ from datetime import datetime
 import models
 
 
+# 3. BaseModel
 class BaseModel:
     """Representing the base model of HBNB project."""
     def __init__(self, *args, **kwargs):
@@ -24,6 +25,7 @@ class BaseModel:
         - updated_at: the time at which the instance updated
         """
 
+        # 4. Create BaseModel from dictionary
         if (kwargs):
             format = '%Y-%m-%dT%H:%M:%S.%f'
             self.id = kwargs["id"]
