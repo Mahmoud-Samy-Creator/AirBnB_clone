@@ -40,13 +40,14 @@ class FileStorage:
 
     def reload(self):
         # Need more understanding
-        """ deserializes the JSON file to __objects """
-        if (FileStorage.__file_path):
+        """ Deserializes the JSON file to __objects """
+        try:
             with open(FileStorage.__file_path) as file:
-                dict = json.load(file)
-                for value in dict.values():
-                    class_name = value["__class__"]
-                    del value["__class__"]
-                    self.new(eval(class_name)(**value))
-        else:
+                obj_dict = json.load(file)
+                for v in obj_dict.values():
+                    class_name = v["__class__"]
+                    del v["__class__"]
+                    self.new(eval(class_name)(**v))
+        except FileNotFoundError:
             return
+
