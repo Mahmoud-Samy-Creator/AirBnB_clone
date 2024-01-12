@@ -13,18 +13,28 @@ from datetime import datetime
 
 import models
 
+
 class BaseModel:
     """Representing the base model of HBNB project."""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Define public instance attributes
         - id: unique id for every instance
         - created_at: the time at which the instance created
         - updated_at: the time at which the instance updated
         """
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+
+        if (kwargs):
+            format = '%Y-%m-%dT%H:%M:%S.%f'
+            self.id = kwargs["id"]
+            self.created_at = datetime.strptime(kwargs["created_at"], format)
+            self.updated_at = datetime.strptime(kwargs["updated_at"], format)
+            del kwargs['__class__']
+
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """
@@ -49,7 +59,6 @@ class BaseModel:
         formatted_updated_at = self.updated_at.isoformat()
 
         final_dict = self.__dict__.copy()
-
         final_dict["__class__"] = class_name
         final_dict["created_at"] = formatted_created_at
         final_dict["updated_at"] = formatted_updated_at
