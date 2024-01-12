@@ -10,6 +10,7 @@ from uuid import uuid4
 
 # datetime - assign with the current datetime when an instance is created
 from datetime import datetime
+from models import storage
 
 import models
 
@@ -24,19 +25,20 @@ class BaseModel:
         - created_at: the time at which the instance created
         - updated_at: the time at which the instance updated
         """
+        format = '%Y-%m-%dT%H:%M:%S.%f'
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
         # 4. Create BaseModel from dictionary
         if (kwargs):
-            format = '%Y-%m-%dT%H:%M:%S.%f'
             self.id = kwargs["id"]
             self.created_at = datetime.strptime(kwargs["created_at"], format)
             self.updated_at = datetime.strptime(kwargs["updated_at"], format)
             del kwargs['__class__']
 
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """
@@ -51,6 +53,7 @@ class BaseModel:
         updated_at with the current datetime
         """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
