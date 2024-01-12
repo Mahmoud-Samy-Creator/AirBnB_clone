@@ -6,8 +6,6 @@ all common attributes/methods for other classes
 """
 
 
-import models
-
 # to generate unique id [ Use it in string only ]
 from uuid import uuid4
 
@@ -21,11 +19,11 @@ from models import storage
 class BaseModel:
     """Representing the base model of HBNB project."""
     def __init__(self, *args, **kwargs):
-        """
-        Define public instance attributes
-        - id: unique id for every instance
-        - created_at: the time at which the instance created
-        - updated_at: the time at which the instance updated
+        """Initialize a new BaseModel.
+
+        Args:
+            *args (any): Unused.
+            **kwargs (dict): Key/value pairs of attributes.
         """
         format = '%Y-%m-%dT%H:%M:%S.%f'
         self.id = str(uuid4())
