@@ -11,4 +11,4 @@ for your application
 
 storage = FileStorage()
 
-storage.reload
+storage.reload()
