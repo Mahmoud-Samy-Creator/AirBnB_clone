@@ -104,7 +104,7 @@ class HBNBCommand(Cmd):
         else:
             object_list = []
             for object in storage.all().values():
-                if len(args) > 0 and args[0] in object.__class__.__name__:
+                if len(args) > 0 and args[0] == object.__class__.__name__:
                     object_list.append(object.__str__())
                 elif len(args) == 0:
                     object_list.append(object.__str__())
