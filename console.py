@@ -110,42 +110,47 @@ class HBNBCommand(Cmd):
                     object_list.append(object.__str__())
             print(object_list)
 
-    def do_update(self, args):
-        """ update <class name> <id> <attribute name> "<attribute value> """
-        args = args.split(" ")
+    def do_update(self, arg):
+        """Usage: update <class> <id> <attribute_name> <attribute_value> or
+       <class>.update(<id>, <attribute_name>, <attribute_value>) or
+       <class>.update(<id>, <dictionary>)
+        Update a class instance of a given id by adding or updating
+        a given attribute key/value pair or dictionary."""
+        argl = argl.split(" ")
         objdict = storage.all()
-        if len(args) == 0:
+
+        if len(argl) == 0:
             print("** class name missing **")
             return False
-        if args[0] not in HBNBCommand.__classes:
+        if argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return False
-        if len(args) == 1:
+        if len(argl) == 1:
             print("** instance id missing **")
             return False
-        if f"{args[0]}.{args[1]}" not in objdict.keys():
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
             print("** no instance found **")
             return False
-        if len(args) == 2:
+        if len(argl) == 2:
             print("** attribute name missing **")
             return False
-        if len(args) == 3:
-            print("** value missing **")
-            return False
-        if len(args) == 4:
-            # Start updating
-            # Get the object from storage dictionary
-            obj = objdict["{}.{}".format(args[0], args[1])]
+        if len(argl) == 3:
+            try:
+                type(eval(argl[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
 
-            # Check if the attr name in the keys
-            if args[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[args[2]])
-                obj.__dict__[args[2]] = valtype(args[3])
+        if len(argl) == 4:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            if argl[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argl[2]])
+                obj.__dict__[argl[2]] = valtype(argl[3])
             else:
-                obj.__dict__[args[2]] = args[3]
-        elif type(eval(args[2])) == dict:
-            obj = objdict["{}.{}".format(args[0], args[1])]
-            for k, v in eval(args[2]).items():
+                obj.__dict__[argl[2]] = argl[3]
+        elif type(eval(argl[2])) == dict:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            for k, v in eval(argl[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
@@ -153,6 +158,7 @@ class HBNBCommand(Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
