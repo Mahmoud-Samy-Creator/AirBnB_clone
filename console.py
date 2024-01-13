@@ -96,19 +96,21 @@ class HBNBCommand(Cmd):
             del object_dict[f"{class_name}.{object_id}"]
             storage.save()
 
-    def do_all(self, args):
-        """ Print string representation of all objects """
-        args = args.split(" ")
-        if len(args) > 0 and args[0] not in HBNBCommand.__classes:
+    def do_all(self, arg):
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
+        If no class is specified, displays all instantiated objects."""
+        argl = arg.split(" ")
+        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
-            object_list = []
-            for object in storage.all().values():
-                if len(args) > 0 and args[0] == object.__class__.__name__:
-                    object_list.append(object.__str__())
-                elif len(args) == 0:
-                    object_list.append(object.__str__())
-            print(object_list)
+            objl = []
+            for obj in storage.all().values():
+                if len(argl) > 0 and argl[0] == obj.__class__.__name__:
+                    objl.append(obj.__str__())
+                elif len(argl) == 0:
+                    objl.append(obj.__str__())
+            print(objl)
 
     def do_update(self, args):
         """ update <class name> <id> <attribute name> "<attribute value> """
