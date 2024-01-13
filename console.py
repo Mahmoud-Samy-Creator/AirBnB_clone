@@ -135,7 +135,7 @@ class HBNBCommand(Cmd):
         if len(args) == 4:
             # Start updating
             # Get the object from storage dictionary
-            obj = objdict["{}.{}".format(args[0], args[1])]
+            obj = objdict[f"{args[0]}.{args[1]}"]
 
             # Check if the attr name in the keys
             if args[2] in obj.__class__.__dict__.keys():
