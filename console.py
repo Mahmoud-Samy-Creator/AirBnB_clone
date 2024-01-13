@@ -113,7 +113,7 @@ class HBNBCommand(Cmd):
     def do_update(self, args):
         """ update <class name> <id> <attribute name> "<attribute value> """
         args = args.split(" ")
-        objdict = storage.all().keys()
+        objdict = storage.all()
         if len(args) == 0:
             print("** class name missing **")
             return False
@@ -123,7 +123,7 @@ class HBNBCommand(Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return False
-        if f"{args[0]}.{args[1]}" not in objdict:
+        if f"{args[0]}.{args[1]}" not in objdict.keys():
             print("** no instance found **")
             return False
         if len(args) == 2:
