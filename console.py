@@ -8,12 +8,21 @@ from cmd import Cmd
 # Importing basemodel to use it creating new objects
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(Cmd):
+    """Defines the HolbertonBnB command interpreter.
+
+    Attributes:
+        prompt (str): The command prompt.
     """
-    Entry point of the command interpreter
-    """
+
     prompt = "(hbnb) "
     __classes = {
         "BaseModel",
